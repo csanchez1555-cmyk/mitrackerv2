@@ -725,3 +725,70 @@
     </script>
 </body>
 </html>
+// --- ESTADO DE LA APP ---
+let habits = JSON.parse(localStorage.getItem('habits_data')) || [
+    { id: 1, name: "Estudio IA (2h)", completed: false },
+    { id: 2, name: "Proyecto Python", completed: false },
+    { id: 3, name: "Salud / Ejercicio", completed: false }
+];
+
+let completionMap = JSON.parse(localStorage.getItem('completion_map')) || {};
+
+// --- FUNCIONES PRINCIPALES ---
+function init() {
+    renderHabits();
+    renderCalendar();
+    updateKPIs();
+    updateChart();
+    
+    // Event Listeners
+    document.getElementById('addHabitBtn').onclick = addHabit;
+    document.getElementById('goalSlider').oninput = (e) => {
+        document.getElementById('goalValueDisplay').innerText = e.target.value + "%";
+        updateKPIs();
+    };
+}
+
+function renderHabits() {
+    const container = document.getElementById('checklistContainer');
+    container.innerHTML = habits.length ? '' : '<div class="empty-message">No hay hábitos aún</div>';
+    
+    habits.forEach(habit => {
+        const item = document.createElement('div');
+        item.className = 'checklist-item';
+        item.innerHTML = `
+            <div class="checklist-left">
+                <div class="check-custom ${habit.completed ? 'checked' : ''}" onclick="toggleHabit(${habit.id})"></div>
+                <span style="${habit.completed ? 'text-decoration: line-through; color: #94a3b8' : ''}">${habit.name}</span>
+            </div>
+            <i class="fas fa-trash" style="color: #cbd5e1; cursor:pointer" onclick="deleteHabit(${habit.id})"></i>
+        `;
+        container.appendChild(item);
+    });
+    localStorage.setItem('habits_data', JSON.stringify(habits));
+}
+
+function toggleHabit(id) {
+    const habit = habits.find(h => h.id === id);
+    habit.completed = !habit.completed;
+    renderHabits();
+    updateKPIs();
+}
+
+function updateKPIs() {
+    const completedToday = habits.filter(h => h.completed).length;
+    document.getElementById('todayProgress').innerText = `${completedToday}/${habits.length}`;
+    
+    // Cálculo de racha (simplificado)
+    const streak = Object.values(completionMap).filter(v => v).length;
+    document.getElementById('streakValue').innerText = streak;
+    
+    // Objetivo Mensual
+    const goal = document.getElementById('goalSlider').value;
+    const currentProgress = habits.length ? Math.round((completedToday / habits.length) * 100) : 0;
+    document.getElementById('monthObjective').innerText = currentProgress + "%";
+}
+
+// Inicializar al cargar
+document.addEventListener('DOMContentLoaded', init);
+
