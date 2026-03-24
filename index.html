@@ -1,45 +1,291 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Tracker V4</title>
+<title>English Tracker V4 - Premium</title>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial;
-  background: #111;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   text-align: center;
-  font-size: 24px;
-}
-.light {
-  background: white;
-  color: black;
-}
-h1 { font-size: 36px; }
-.block {
-  background: #222;
-  margin: 20px;
+  font-size: 16px;
+  min-height: 100vh;
   padding: 20px;
-  border-radius: 15px;
+  transition: all 0.3s ease;
 }
-.light .block { background: #ddd; }
-button {
-  font-size: 24px;
-  padding: 15px;
-  margin: 10px;
+
+.light {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #2c3e50;
+}
+
+/* Header mejorado */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  padding: 20px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #fff, #ffd89b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.light h1 {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Grid de tarjetas */
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.light .card {
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.time-value {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 20px 0;
+  padding: 20px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 15px;
+  display: inline-block;
+  min-width: 200px;
+}
+
+.light .time-value {
+  background: rgba(0,0,0,0.05);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  transition: width 0.3s ease;
   border-radius: 10px;
 }
-textarea {
-  width: 90%;
-  height: 120px;
-  font-size: 22px;
-}
-.reset {
-  background: red;
+
+/* Botones modernos */
+.btn {
+  font-size: 1rem;
+  padding: 12px 24px;
+  margin: 8px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4caf50, #45a049);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #f44336, #da190b);
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+}
+
+/* Área de grabación */
+.recording-controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.recording-active {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Textarea mejorado */
+textarea {
+  width: 100%;
+  min-height: 120px;
+  font-size: 1rem;
+  border-radius: 15px;
+  padding: 15px;
+  border: none;
+  background: rgba(255,255,255,0.9);
+  font-family: inherit;
+  resize: vertical;
+  margin: 15px 0;
+}
+
+.light textarea {
+  background: white;
+  border: 1px solid #ddd;
+}
+
+/* Sección de score */
+.score-card {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 20px;
+  padding: 25px;
+  text-align: center;
+}
+
+.score-number {
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+/* Canvas mejorado */
+canvas {
+  max-width: 100%;
+  height: auto;
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.light canvas {
+  background: rgba(0,0,0,0.05);
+}
+
+/* Footer */
+.footer {
+  max-width: 1200px;
+  margin: 30px auto 0;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  .time-value {
+    font-size: 2rem;
+    min-width: 150px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .card h2 {
+    font-size: 1.4rem;
+  }
+}
+
+/* Tooltip */
+[data-tooltip] {
+  position: relative;
+  cursor: pointer;
+}
+
+[data-tooltip]:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 10px;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  white-space: nowrap;
+  display: none;
+  z-index: 1000;
+}
+
+[data-tooltip]:hover:before {
+  display: block;
 }
 </style>
 
@@ -47,49 +293,75 @@ textarea {
 
 <body>
 
-<h1>🧠 English Tracker</h1>
-
-<button onclick="toggleMode()">🌗 Mode</button>
-
-<div class="block">
-<h2>INPUT</h2>
-<button onclick="addTime('input',15)">+15</button>
-<p id="input"></p>
+<div class="header">
+  <h1>🎯 English Tracker Premium</h1>
+  <button class="btn" onclick="toggleMode()" data-tooltip="Cambiar tema">🌙 Modo Oscuro/Claro</button>
 </div>
 
-<div class="block">
-<h2>SHADOWING</h2>
-<button onclick="addTime('shadow',10)">+10</button>
-<p id="shadow"></p>
+<div class="dashboard">
+  <!-- Input Card -->
+  <div class="card">
+    <h2>🎧 INPUT</h2>
+    <div class="time-value" id="input">0/60</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="input-progress" style="width: 0%"></div>
+    </div>
+    <button class="btn btn-primary" onclick="addTime('input',15)" data-tooltip="Agregar 15 minutos">+15 min</button>
+  </div>
+
+  <!-- Shadowing Card -->
+  <div class="card">
+    <h2>🗣️ SHADOWING</h2>
+    <div class="time-value" id="shadow">0/30</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="shadow-progress" style="width: 0%"></div>
+    </div>
+    <button class="btn btn-primary" onclick="addTime('shadow',10)" data-tooltip="Agregar 10 minutos">+10 min</button>
+  </div>
+
+  <!-- Output Card -->
+  <div class="card">
+    <h2>💬 OUTPUT</h2>
+    <div class="time-value" id="output">0/60</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="output-progress" style="width: 0%"></div>
+    </div>
+    <button class="btn btn-primary" onclick="addTime('output',20)" data-tooltip="Agregar 20 minutos">+20 min</button>
+  </div>
 </div>
 
-<div class="block">
-<h2>OUTPUT</h2>
-<button onclick="addTime('output',20)">+20</button>
-<p id="output"></p>
+<div class="dashboard">
+  <!-- Recording Card -->
+  <div class="card">
+    <h2>🎤 RECORD SPEAKING</h2>
+    <div class="recording-controls">
+      <button class="btn btn-primary" onclick="startRecording()" id="recordBtn">🔴 Iniciar Grabación</button>
+      <button class="btn btn-warning" onclick="stopRecording()">⏹️ Detener</button>
+    </div>
+    <audio id="audioPlayback" controls style="width: 100%; margin-top: 15px;"></audio>
+  </div>
+
+  <!-- Phrases Card -->
+  <div class="card">
+    <h2>📝 FRASES IMPORTANTES</h2>
+    <textarea id="phrases" placeholder="Escribe tus frases importantes aquí..."></textarea>
+    <button class="btn btn-primary" onclick="savePhrases()">💾 Guardar Frases</button>
+  </div>
+
+  <!-- Score Card -->
+  <div class="card score-card">
+    <h2>📊 PUNTUACIÓN TOTAL</h2>
+    <div class="score-number" id="score">0/150</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="score-progress" style="width: 0%"></div>
+    </div>
+    <canvas id="chart" width="400" height="200"></canvas>
+  </div>
 </div>
 
-<div class="block">
-<h2>🎤 Record Speaking</h2>
-<button onclick="startRecording()">Start</button>
-<button onclick="stopRecording()">Stop</button>
-<br><br>
-<audio id="audioPlayback" controls></audio>
+<div class="footer">
+  <button class="btn btn-danger" onclick="resetDay()" data-tooltip="Reiniciar el progreso del día">🔄 RESET DAY</button>
 </div>
-
-<div class="block">
-<h2>🧱 Frases</h2>
-<textarea id="phrases"></textarea>
-<button onclick="savePhrases()">Save</button>
-</div>
-
-<div class="block">
-<h2>📊 Score</h2>
-<p id="score"></p>
-<canvas id="chart" width="300" height="150"></canvas>
-</div>
-
-<button class="reset" onclick="resetDay()">RESET DAY</button>
 
 <script>
 let data = JSON.parse(localStorage.getItem('tracker')) || {
@@ -100,80 +372,259 @@ let data = JSON.parse(localStorage.getItem('tracker')) || {
 };
 
 function updateUI() {
-  document.getElementById('input').innerText = data.input + "/60";
-  document.getElementById('shadow').innerText = data.shadow + "/30";
-  document.getElementById('output').innerText = data.output + "/60";
-
+  // Update time values
+  document.getElementById('input').innerHTML = `${data.input}/60 min`;
+  document.getElementById('shadow').innerHTML = `${data.shadow}/30 min`;
+  document.getElementById('output').innerHTML = `${data.output}/60 min`;
+  
+  // Update progress bars
+  const inputPercent = (data.input / 60) * 100;
+  const shadowPercent = (data.shadow / 30) * 100;
+  const outputPercent = (data.output / 60) * 100;
+  
+  document.getElementById('input-progress').style.width = `${Math.min(inputPercent, 100)}%`;
+  document.getElementById('shadow-progress').style.width = `${Math.min(shadowPercent, 100)}%`;
+  document.getElementById('output-progress').style.width = `${Math.min(outputPercent, 100)}%`;
+  
+  // Update total score
   let score = data.input + data.shadow + data.output;
-  document.getElementById('score').innerText = score + "/150";
-
+  const scorePercent = (score / 150) * 100;
+  document.getElementById('score').innerHTML = `${score}/150 puntos`;
+  document.getElementById('score-progress').style.width = `${Math.min(scorePercent, 100)}%`;
+  
+  // Change color based on score
+  const scoreElement = document.getElementById('score');
+  if (score >= 120) {
+    scoreElement.style.color = "#4caf50";
+  } else if (score >= 80) {
+    scoreElement.style.color = "#ff9800";
+  } else {
+    scoreElement.style.color = "#f44336";
+  }
+  
   drawChart();
-
   localStorage.setItem('tracker', JSON.stringify(data));
 }
 
 function addTime(type, val) {
   data[type] += val;
+  
+  // Mostrar animación de feedback
+  const element = document.getElementById(type);
+  element.style.transform = "scale(1.1)";
+  setTimeout(() => {
+    element.style.transform = "scale(1)";
+  }, 200);
+  
   updateUI();
 }
 
 function resetDay() {
-  let score = data.input + data.shadow + data.output;
-  data.history.push(score);
-  data.input = 0;
-  data.shadow = 0;
-  data.output = 0;
-  updateUI();
+  if (confirm('¿Estás seguro de que quieres reiniciar el progreso del día? Se guardará la puntuación en el historial.')) {
+    let score = data.input + data.shadow + data.output;
+    if (score > 0) {
+      data.history.push(score);
+      // Mantener solo los últimos 14 días
+      if (data.history.length > 14) data.history.shift();
+    }
+    data.input = 0;
+    data.shadow = 0;
+    data.output = 0;
+    updateUI();
+    
+    // Mostrar mensaje de éxito
+    showToast("✅ Día reiniciado correctamente!", "success");
+  }
 }
 
 function toggleMode() {
   document.body.classList.toggle('light');
+  const modeBtn = document.querySelector('.header .btn');
+  if (document.body.classList.contains('light')) {
+    modeBtn.innerHTML = "🌞 Modo Claro/Oscuro";
+  } else {
+    modeBtn.innerHTML = "🌙 Modo Oscuro/Claro";
+  }
 }
 
-// 🎤 RECORDING
+// 🎤 RECORDING mejorado
 let mediaRecorder;
 let audioChunks = [];
+let recordingStream;
 
 async function startRecording() {
-  let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-  mediaRecorder = new MediaRecorder(stream);
-  mediaRecorder.start();
-
-  mediaRecorder.ondataavailable = e => {
-    audioChunks.push(e.data);
-  };
+  try {
+    audioChunks = [];
+    recordingStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(recordingStream);
+    mediaRecorder.start();
+    
+    const recordBtn = document.getElementById('recordBtn');
+    recordBtn.classList.add('recording-active');
+    recordBtn.innerHTML = "🔴 Grabando...";
+    recordBtn.style.background = "linear-gradient(135deg, #f44336, #da190b)";
+    
+    mediaRecorder.ondataavailable = e => {
+      if (e.data.size > 0) {
+        audioChunks.push(e.data);
+      }
+    };
+    
+    showToast("🎤 Grabación iniciada!", "info");
+  } catch (err) {
+    console.error(err);
+    showToast("❌ No se pudo acceder al micrófono.", "error");
+  }
 }
 
 function stopRecording() {
+  if (!mediaRecorder || mediaRecorder.state === 'inactive') return;
+  
   mediaRecorder.stop();
   mediaRecorder.onstop = () => {
-    let blob = new Blob(audioChunks);
-    let url = URL.createObjectURL(blob);
-    document.getElementById('audioPlayback').src = url;
+    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audioPlayback = document.getElementById('audioPlayback');
+    audioPlayback.src = audioUrl;
+    audioPlayback.controls = true;
+    
+    // Detener todas las pistas del micrófono
+    if (recordingStream) {
+      recordingStream.getTracks().forEach(track => track.stop());
+    }
+    
+    const recordBtn = document.getElementById('recordBtn');
+    recordBtn.classList.remove('recording-active');
+    recordBtn.innerHTML = "🔴 Iniciar Grabación";
+    recordBtn.style.background = "";
+    
+    showToast("✅ Grabación guardada!", "success");
     audioChunks = [];
   };
 }
 
-// 📊 CHART
+// 📊 CHART mejorado
 function drawChart() {
   let canvas = document.getElementById('chart');
+  if (!canvas) return;
+  
   let ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,300,150);
-
-  data.history.slice(-7).forEach((val,i)=>{
-    ctx.fillRect(i*40,150-val,30,val);
+  ctx.clearRect(0, 0, 400, 200);
+  
+  let scores = data.history.slice(-7);
+  if (scores.length === 0) {
+    ctx.fillStyle = "rgba(255,255,255,0.5)";
+    ctx.font = "14px Poppins";
+    ctx.fillText("Sin datos históricos", 140, 100);
+    return;
+  }
+  
+  let maxScore = Math.max(150, ...scores);
+  let barWidth = 35;
+  let startX = 30;
+  
+  scores.forEach((val, i) => {
+    let barHeight = (val / maxScore) * 150;
+    let x = startX + (i * (barWidth + 10));
+    let y = 180 - barHeight;
+    
+    // Gradiente para las barras
+    let gradient = ctx.createLinearGradient(x, y, x, y + barHeight);
+    gradient.addColorStop(0, '#4caf50');
+    gradient.addColorStop(1, '#8bc34a');
+    
+    ctx.fillStyle = gradient;
+    ctx.fillRect(x, y, barWidth, barHeight);
+    
+    // Borde redondeado
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.strokeRect(x, y, barWidth, barHeight);
+    
+    ctx.fillStyle = 'white';
+    ctx.font = "bold 12px Poppins";
+    ctx.fillText(val, x + barWidth/2 - 10, y - 5);
+    
+    // Etiqueta de día
+    let days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    let dayIndex = (new Date().getDay() + i - scores.length + 1 + 7) % 7;
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.fillText(days[dayIndex], x + barWidth/2 - 5, 195);
   });
 }
 
-// 💾 FRASES
-function savePhrases(){
+// 💾 FRASES mejorado
+function savePhrases() {
   let text = document.getElementById('phrases').value;
-  localStorage.setItem('phrases', text);
+  if (text.trim()) {
+    localStorage.setItem('phrases', text);
+    showToast("💾 Frases guardadas correctamente!", "success");
+  } else {
+    showToast("⚠️ No hay frases para guardar", "warning");
+  }
 }
 
-window.onload = function(){
+// Toast notification
+function showToast(message, type) {
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+    color: white;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  `;
+  
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.style.animation = 'slideOut 0.3s ease';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// Agregar animaciones CSS para toast
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+`;
+document.head.appendChild(style);
+
+window.onload = function() {
   updateUI();
   document.getElementById('phrases').value = localStorage.getItem('phrases') || "";
+  
+  // Animar entrada
+  const cards = document.querySelectorAll('.card');
+  cards.forEach((card, index) => {
+    card.style.animation = `slideIn 0.5s ease ${index * 0.1}s both`;
+  });
 };
 </script>
 
